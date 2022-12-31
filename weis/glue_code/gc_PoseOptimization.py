@@ -42,6 +42,11 @@ class PoseOptimizationWEIS(PoseOptimization):
             n_add += self.modeling['WISDEM']['RotorSE']['n_te_flaps']
         if self.opt['design_variables']['control']['ps_percent']['flag']:
             n_add += 1
+        if self.opt["design_variables"]["control"]["V_in"]["flag"]:
+            n_add += 1
+
+        if self.opt["design_variables"]["rated_power"]["flag"]:
+            n_add += 1
         
         if self.opt['driver']['optimization']['form'] == 'central':
             n_add *= 2
@@ -191,7 +196,17 @@ class PoseOptimizationWEIS(PoseOptimization):
                         lower=tmd_group['damping_ratio']['lower_bound'],
                         upper=tmd_group['damping_ratio']['upper_bound']
                         )
-        
+                        
+        if control_opt["V_in"]["flag"]:
+            wt_opt.model.add_design_var(
+                "control.V_in", lower=control_opt["V_in"]["minimum"], upper=control_opt["V_in"]["maximum"]
+        )
+
+        if self.opt['design_variables']["rated_power"]["flag"]:
+            wt_opt.model.add_design_var(
+                "configuration.rated_power", lower=self.opt['design_variables']["rated_power"]["minimum"], upper=self.opt['design_variables']["rated_power"]["maximum"]
+        )
+
         return wt_opt
 
     

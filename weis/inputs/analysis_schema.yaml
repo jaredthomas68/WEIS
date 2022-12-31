@@ -218,6 +218,36 @@ properties:
                                 default: {}
                                 properties:
                                     flag: *flag
+                    V_in:
+                        type: object
+                        default: {}
+                        properties:
+                            flag: *flag
+                            min:
+                                type: number
+                                default: 0.00001
+                                minimum: 0.00001
+                                unit: m/s
+                            max:
+                                type: number
+                                default: 6.0
+                                minimum: 0.00001
+                                unit: m/s
+            rated_power:
+                type: object
+                default: {}
+                properties:
+                    flag: *flag
+                    min:
+                        type: number
+                        default: 1E6
+                        minimum: 1.0
+                        unit: W
+                    max:
+                        type: number
+                        default: 5E6 
+                        minimum: 1.0
+                        unit: W
             TMDs:
                 type: object
                 description: Design variables associated with TMDs
